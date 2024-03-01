@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login and Registration</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+</head>
+
+<body>
+    <h1 class="main">Welcome to TradeMate</h1>
+    <div class="container">
+        <div>
+        </div>
+        <div>
+            {% with messages = get_flashed_messages(category_filter=['log_error']) %}
+            {% if messages %}                              
+                <div class="error">
+                    {% for message in messages %}               
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>             
+            {% endif %}
+            {% endwith %}
+            <form action="/login" method="post">
+                <h2>Login</h2>
+                <p>Email: <input name='email' type='email'></p>      
+                <p>Password: <input name='password' type='password'></p>          
+                <input type="submit" value="Login">
+            </form>
+        </div>
+        <div>
+            {% with messages = get_flashed_messages(category_filter=['reg_error']) %}
+                {% if messages %}
+                    <div class="error">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        
+            <form action="/register" method="post">
+                <h2>Registration</h2>
+                <p>First Name: <input name='first_name' type='text'></p>      
+                <p>Last Name: <input name='last_name' type='text'></p>      
+                <p>Email: <input name='email' type='email'></p>      
+                <p>Password: <input name='password' type='password'></p>       
+                <p>Confirm Password: <input name='confirm_password' type='password'></p>          
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>   
+</body>
+
+</html>

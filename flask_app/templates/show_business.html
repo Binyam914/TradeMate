@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>business Details</title>
+  <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">TradeMate</a>
+        <ul class="nav-links">
+            <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>Home</a></li>
+            <li><a href="/my_businesses" {% if request.path == '/my_businesses' %}class="active"{% endif %}>My Business</a></li>
+            <li><a href="/add_business" {% if request.path == '/add_business' %}class="active"{% endif %}>Add Business</a></li>
+            <li><a href="/categories" {% if request.path == '/categories' %}class="active"{% endif %}>Categories</a></li>
+            <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
+        </ul>
+    </div>
+</nav>
+  
+  <div class="container mt-5">
+    <div class="jumbotron">
+      <h1>{{ business.name }}</h1>
+      <p class="lead"><strong>Description:</strong> {{ business.description }}</p>
+      <p class="lead"><strong>Website:</strong> <a href="{{ business.link }}" target="_blank">{{ business.link }}</a></p>
+      <p class="lead"><strong>Location:</strong> {{ business.city }}, {{ business.state }}</p>
+      <p class="lead"><strong>Phone number:</strong> {{ business.phone_number }}</p>
+      {% if not business.user_voted %}
+      <form action="/like/{{ business.id }}" method="POST">
+          <button class="btn-primary" type="submit">Like</button>
+      </form>
+      {% else %}
+      <form action="/remove_like/{{ business.id }}" method="POST">
+          <button class="btn-danger" type="submit">Remove Like</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

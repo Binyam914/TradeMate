@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Dashboard</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">TradeMate</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/my_businesses" {% if request.path == '/my_businesses' %}class="active"{% endif %}>My Business</a></li>
+                <li><a href="/add_business" {% if request.path == '/add_business' %}class="active"{% endif %}>Add Business</a></li>
+                <li><a href="/categories" {% if request.path == '/categories' %}class="active"{% endif %}>Categories</a></li>
+                <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    
+    <div class="container">
+        <div>     
+            <h2>Business Lists</h2>
+           
+
+          <div class="card-container">
+
+            
+            {% for business in businesses %}
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">{{ business.name }}</h2>
+        <p class="card-description">{{ business.description }}</p>
+        <p class="card-city">City: {{ business.city }}</p>
+    </div>
+    <div class="actions">
+        <div class="card-actions">
+            <a href="/business/{{ business.id }}">Details</a>
+            <div>
+                {% if business.user_voted %}
+                <!-- Display thumbs-up icon in blue if user has liked the business -->
+                <a href="/remove_like_in_dashboard/{{ business.id }}">
+                    <svg class="thumbs-up-icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#1877f2" d="M13 2V8H9V2H5v11.08h2V22l7-6.92h4V2z"></path>
+                    </svg>
+                </a>
+                {% else %}
+                <!-- Display thumbs-up icon in gray if user has not liked the business -->
+                <a href="/like_in_dashboard/{{ business.id }}">
+                    <svg class="thumbs-up-icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#606770" d="M13 2V8H9V2H5v11.08h2V22l7-6.92h4V2z"></path>
+                    </svg>
+                </a>
+                {% endif %}
+                <a>{{ business.like_count }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+        </div>
+        
+          
+            </div>
+        </div>
+        <div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Update Business</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">TradeMate</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/my_businesses" {% if request.path == '/my_businesses' %}class="active"{% endif %}>My Business</a></li>
+                <li><a href="/add_business" {% if request.path == '/add_business' %}class="active"{% endif %}>Add Business</a></li>
+                <li><a href="/categories" {% if request.path == '/categories' %}class="active"{% endif %}>Categories</a></li>
+                <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(category_filter=['update_error']) %}   
+    {% if messages %}                              
+    <div class="error">
+        {% for message in messages %}               
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>    
+    {% endif %}
+    {% endwith %}
+       <div class="container">
+        <div class="update-user">
+            <div class="">
+                <h1>Update business</h1>
+                <form action="/business/update/save" method="post">
+                    <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                    <input type="hidden" name="id" value="{{business.id}}">
+                    <label for="name">Name: </label>
+                    <input name="name" type="text" value="{{business.name}}">
+                    <label for="name">Category: </label>
+                    
+                    <select name="category_id" id="category_id">
+                        {% for category in categories %}
+                            {% if category.id == business.category_id %}
+                                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                            {% else %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for="description">Description: </label>
+                    <input name="description" type="text" value="{{business.description}}">
+                    <label for="link">Link: </label>
+                    <input name="link" type="text" value="{{business.link}}">
+                    <label for="state">State: </label>
+                    <input name="state" type="text" value="{{business.state}}">
+                    <label for="city">City: </label>
+                    <input name="city" type="text" value="{{business.city}}">
+                    <label for="phone_number">Phone number: </label>
+                    <input name="phone_number" type="text" value="{{business.phone_number}}">
+                    <button type="submit">update Business</button>
+                </form>
+            </div>
+        </div>
+   
+</div>
+</body>
+</html>

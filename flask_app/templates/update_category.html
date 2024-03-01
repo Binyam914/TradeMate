@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Update Business</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">TradeMate</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/my_businesses" {% if request.path == '/my_businesses' %}class="active"{% endif %}>My Business</a></li>
+                <li><a href="/add_business" {% if request.path == '/add_business' %}class="active"{% endif %}>Add Business</a></li>
+                <li><a href="/categories" {% if request.path == '/categories' %}class="active"{% endif %}>Categories</a></li>
+                <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(category_filter=['category_error']) %}   
+    {% if messages %}                              
+    <div class="error">
+        {% for message in messages %}               
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>    
+    {% endif %}
+    {% endwith %}
+       <div class="container">
+        <div class="update-user">
+            <div class="">
+                <h1>Update category</h1>
+                <form action="/category/update/save" method="post">
+                    <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                    <input type="hidden" name="id" value="{{ category.id }}"> 
+                    <label for="name">Name: </label>
+                    <input name="name" type="text" value="{{ category.name }}">
+                    <button type="submit">Update Category</button>
+                </form>
+                
+            </div>
+        </div>
+   
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Virtual environment
+venv/
+
+# Compiled Python files
+*.pyc
+
+# Dependency directories
+__pycache__/
+
+# Environment variables file (if you're using one)
+.env
+
+# Logs
+*.log
+
+# Ignore database configurations and data
+instance/
+*.sqlite
+*.db
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+
+# Ignore any other files specific to your development environment or workflow

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>My Business</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/style.css")}}'>
+
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">TradeMate</a>
+        <ul class="nav-links">
+            <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>Home</a></li>
+            <li><a href="/my_businesses" {% if request.path == '/my_businesses' %}class="active"{% endif %}>My Business</a></li>
+            <li><a href="/add_business" {% if request.path == '/add_business' %}class="active"{% endif %}>Add Business</a></li>
+            <li><a href="/categories" {% if request.path == '/categories' %}class="active"{% endif %}>Categories</a></li>
+            <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+    
+    <div class="container">
+        <div>     
+            <h2>Your Business List</h2>
+
+          <div class="card-container">
+            {% for business in businesses %}
+            <div class="card">
+              <div class="card-content">
+                  <h2 class="card-title">{{ business.name }}</h2>
+                  <!-- <p class="card-category">Category: {{ business.category }}</p> -->
+                  <p class="card-description">{{ business.description }}</p>
+                  <!-- <p class="card-state">State: {{ business.state }}</p> -->
+                  <p class="card-city">City: {{ business.city }}</p>
+                  <!-- <p class="card-website">Website: <a href="{{ business.website }}">{{ business.website }}</a></p> -->
+              </div>
+              <div class="card-actions">
+                <a href="/business/{{business.id}}">Details</a>
+                <a href="/business/edit/{{business.id}}">Edit</a>
+                  <a href="/business/{{business.id}}">delete</a>
+                 
+                <!-- <form action="/business/{{business.id}}"><button class="btn-details">Details</button></form> -->
+                  <!-- <svg class="heart-icon" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M12 21.4l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.58L12 21.4z"></path>
+                  </svg> -->
+              </div>
+          </div>
+            {% endfor %}
+        </div>
+        
+          
+            </div>
+        </div>
+        <div>
+    </div>
+</body>
+
+</html>
