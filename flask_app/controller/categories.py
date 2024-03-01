@@ -50,13 +50,39 @@ def lets_update_category(id):
     category = Category.get_one(data)  
     return render_template("update_category.html", category=category)
 
+# @app.route('/category/delete/<int:id>', methods=['GET', 'POST'])
+# def delete_category(id):
+#     data = {"id": id}
+#     if Category.is_category_listed_for_business(data):
+#         flash('Cannot delete category.because other user used this category to list business!.', 'delete_error')
+#     else:
+
+#         Category.delete(data)
+#         flash('Category successfully deleted.', 'success')
+#     return redirect('/categories')
 @app.route('/category/delete/<int:id>', methods=['GET', 'POST'])
 def delete_category(id):
     data = {"id": id}
+    
+    # Assuming you have a user ID stored in the session
+    if 'user_id' not in session:
+        # User is not logged in, handle accordingly
+        return redirect('/login')  # Redirect to login page or handle unauthorized access
+        
+    # Fetch the category by ID
+    category_data = Category.get_one(data)
+    
+    # Assuming 'user_id' is a key in the dictionary returned by get_one
+    if category_data['user_id'] != session['user_id']:
+        # Current user is not the owner of the category
+        flash('You are not authorized to delete this category.', 'category_error')
+        return redirect('/categories')  # Redirect to categories page or handle unauthorized access
+    
     if Category.is_category_listed_for_business(data):
-        flash('Cannot delete category.because other user used this category to list business!.', 'delete_error')
+        flash('Cannot delete category because other users used this category to list businesses!', 'category_error')
     else:
-
         Category.delete(data)
         flash('Category successfully deleted.', 'success')
+        
     return redirect('/categories')
+

@@ -8,7 +8,7 @@ class Category:
         self.name = data['name']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.user_id = data['id']
+        self.user_id = data['user_id']
     @classmethod
     def get_categories(cls):
         query = '''
@@ -42,32 +42,25 @@ class Category:
         return results
 
 
-    def get_my_businesses(cls,data):
-        query = '''
-            SELECT * FROM businesses
-            WHERE user_id =  %(user_id)s
-        '''
-        results = connectToMySQL('businesses_ad_schema').query_db(query,data)
-        return results
 
     @classmethod
     def get_one(cls, data):
+        print('ddd: ',data)
         query = """
             SELECT * FROM categories 
             WHERE id = %(id)s
         """
-
-        result = connectToMySQL('businesses_ad_schema').query_db(query, data)
+        result = connectToMySQL(cls.db).query_db(query, data)
         if result:
             return result[0] 
         else:
             return None
 
     
-    @staticmethod
-    def delete(data):
+    @classmethod
+    def delete(cls,data):
         query = "DELETE FROM categories WHERE id = %(id)s"
-        connectToMySQL('businesses_ad_schema').query_db(query, data)
+        connectToMySQL(cls.db).query_db(query, data)
 
     @classmethod
     def update_category(cls, data):

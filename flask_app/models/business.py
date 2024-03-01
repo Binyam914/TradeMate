@@ -140,6 +140,12 @@ class Business:
         data = {field_name: field_value, 'id': business_id}
         result = connectToMySQL(cls.db).query_db(query, data)
         return not result
+    @classmethod
+    def is_field_unique_for_update(cls, field_name, field_value, business_id):
+        query = f"SELECT id FROM businesses WHERE {field_name} = %({field_name})s AND id != %(id)s"
+        data = {field_name: field_value, 'id': business_id}
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return not result
 
     # @classmethod
     # def is_title_unique(cls,data):

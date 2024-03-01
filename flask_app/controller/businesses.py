@@ -40,9 +40,15 @@ def show_all_businesses():
 @app.route('/add_business')
 def add_business():
     if 'user_id' not in session:
-        flash('You must be logged in to add business!', 'log_error')
+        flash('You must be logged in to add a business!', 'log_error')
         return redirect('/')
-    categories=Category.get_categories ()
+
+    categories = Category.get_categories()
+
+    # Check if categories are not found
+    if not categories:
+        flash('No categories found. Please create a category first before adding a business.', 'category_error')
+        return redirect('/categories') 
     return render_template('add_business.html', categories=categories)
    
 # # Details
@@ -170,6 +176,8 @@ def create_business():
         return redirect('/')    
     form_data = request.form
     print('form_data:', form_data)
+
+    
     if not Business.validate_creation(form_data):
         return redirect('/add_business')
     
@@ -246,15 +254,43 @@ def update_business():
 #     Business.update_business(form_data)
 #     return redirect('/my_businesses')
 
-@app.route('/business/delete/<int:id>',  methods=['GET', 'POST'])
+# @app.route('/business/delete/<int:id>',  methods=['GET', 'POST'])
+# def delete_business(id):
+#     user_id = session.get('user_id')
+#     data = {
+#             "id":id,
+#             "user_id":user_id
+#     }
+#     Business.delete(data)
+#     return redirect('/dashboard')
+@app.route('/business/delete/<int:id>', methods=['GET', 'POST'])
 def delete_business(id):
-    user_id = session.get('user_id')
-    data = {
-            "id":id,
-            "user_id":user_id
+    # Check if the user is logged in
+    if 'user_id' not in session:
+        flash('You must be logged in to delete a business.', 'error')
+        return redirect('/login')
+
+    # Fetch the business
+    data={
+        'id':id
     }
+    business = Business.get_one(data)
+
+    # Check if the business exists
+    if not business:
+        flash('Business not found.', 'error')
+        return redirect('/dashboard')
+
+    # Check if the logged-in user is the creator of the business
+    if business['user_id'] != session['user_id']:
+        flash('You are not authorized to delete this business.', 'business_error')
+        return redirect('/my_businesses')
+
+    # Delete the business
     Business.delete(data)
-    return redirect('/dashboard')
+
+    flash('Business successfully deleted.', 'success')
+    return redirect('/my_businesses')
 
 @app.route('/business/edit/<int:id>',methods=['GET', 'POST'])
 def lets_update_business(id):

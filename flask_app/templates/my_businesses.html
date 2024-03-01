@@ -22,7 +22,18 @@
             <li><a href="/logout" {% if request.path == '/logout' %}class="active"{% endif %}>Logout</a></li>
         </ul>
     </div>
-</nav>
+   </nav>
+   <div>
+    {% with messages = get_flashed_messages(category_filter=['business_error']) %}   
+    {% if messages %}                              
+    <div class="error">
+        {% for message in messages %}               
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>    
+    {% endif %}
+    {% endwith %}
+  </div>
 
     
     <div class="container">
@@ -43,7 +54,7 @@
               <div class="card-actions">
                 <a href="/business/{{business.id}}">Details</a>
                 <a href="/business/edit/{{business.id}}">Edit</a>
-                  <a href="/business/{{business.id}}">delete</a>
+                  <a href="/business/delete/{{business.id}}">delete</a>
                  
                 <!-- <form action="/business/{{business.id}}"><button class="btn-details">Details</button></form> -->
                   <!-- <svg class="heart-icon" width="24" height="24" viewBox="0 0 24 24">

@@ -23,7 +23,7 @@
     </div>
 </nav>
     <div>
-      {% with messages = get_flashed_messages(category_filter=['delete_error']) %}   
+      {% with messages = get_flashed_messages(category_filter=['category_error']) %}   
       {% if messages %}                              
       <div class="error">
           {% for message in messages %}               
@@ -70,7 +70,7 @@
         </div>
         <div>
              <h2>Add a New Category</h2>
-            {% with messages = get_flashed_messages(category_filter=['category_error']) %}   
+            <!-- {% with messages = get_flashed_messages(category_filter=['category_error']) %}   
             {% if messages %}                              
             <div class="error">
                 {% for message in messages %}               
@@ -78,7 +78,7 @@
                 {% endfor %}
             </div>    
             {% endif %}
-            {% endwith %}
+            {% endwith %} -->
             <div class="contents">
                 <form action="/category/save" method="POST">
                     <input type="hidden" name="user_id" value="{{session['user_id']}}">
