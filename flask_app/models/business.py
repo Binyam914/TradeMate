@@ -146,35 +146,3 @@ class Business:
         data = {field_name: field_value, 'id': business_id}
         result = connectToMySQL(cls.db).query_db(query, data)
         return not result
-
-    # @classmethod
-    # def is_title_unique(cls,data):
-    #     query = "SELECT id FROM businesses WHERE name = %(name)s"
-    #     result = connectToMySQL(cls.db).query_db(query, data)
-    #     return not result 
-    # @classmethod
-    # def is_phone_number_unique(cls,data):
-    #     query = "SELECT id FROM businesses WHERE phone_number = %(phone_number)s"
-    #     result = connectToMySQL(cls.db).query_db(query, data)
-    #     return not result 
-    # @classmethod
-    # def is_link_unique(cls,data):
-    #     query = "SELECT id FROM businesses WHERE link = %(link)s"
-    #     result = connectToMySQL(cls.db).query_db(query, data)
-    #     return not result 
-    
-    # @classmethod
-    # def is_title_unique_for_update(cls,data):
-    #     query = "SELECT id FROM businesses WHERE name = %(name)s AND id != %(id)s"
-    #     result = connectToMySQL(cls.db).query_db(query,data)
-    #     return not result
-    # @classmethod
-    # def is_phone_number_for_update(cls,data):
-    #     query = "SELECT id FROM businesses WHERE phone_number = %(phone_number)s AND id != %(id)s"
-    #     result = connectToMySQL(cls.db).query_db(query,data)
-    #     return not result
-    # @classmethod
-    # def is_link_for_update(cls,data):
-    #     query = "SELECT id FROM businesses WHERE link = %(link)s AND id != %(id)s"
-    #     result = connectToMySQL(cls.db).query_db(query,data)
-    #     return not result

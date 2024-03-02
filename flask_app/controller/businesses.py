@@ -145,30 +145,6 @@ def remove_like_in_dashboard(id):
         businesses = Business.get_all(data)  
         return render_template('dashboard.html', businesses=businesses, user=user)
 
-
-
-# create new button
-
-# @app.route('/business/save', methods=["POST"])
-# def create_business():
-#     if 'user_id' not in session:
-#         flash('You must be logged into to have this accesses!', 'log_error')
-#         return redirect('/')    
-#     form_data = request.form
-#     print('form_data:',form_data)
-#     if not Business.validate_creation(form_data):
-#         return redirect('/add_business')
-#     if not Business.is_title_unique(form_data):
-#         flash('Name must be unique', 'create_error')
-#         return redirect('/add_business')
-#     if not Business.is_phone_number_unique(form_data):
-#         flash('Phone number must be unique', 'create_error')
-#         return redirect('/add_business')
-#     if not Business.is_link_unique(form_data):
-#         flash('Link must be unique', 'create_error')
-#         return redirect('/add_business')
-#     Business.create(form_data)
-#     return redirect('/dashboard')
 @app.route('/business/save', methods=["POST"])
 def create_business():
     if 'user_id' not in session:
@@ -231,38 +207,6 @@ def update_business():
     Business.update_business(form_data)
     return redirect('/my_businesses')
 
-
-
-# @app.route('/business/update/save', methods=["POST"])
-# def update_business():
-#     if 'user_id' not in session:
-#         flash('You must be logged into to have this access!', 'log_error')
-#         return redirect('/')    
-#     form_data = request.form
-#     if not Business.validate_creation(form_data):
-#         flash('Validation error occurred. Please check your input.', 'update_error')
-#         return redirect(request.referrer) 
-#     if not Business.is_title_unique_for_update(form_data):
-#         flash('Name must be unique', 'update_error')
-#         return redirect(request.referrer)
-#     if not Business.is_phone_number_for_update(form_data):
-#         flash('Phone number must be unique', 'update_error')
-#         return redirect(request.referrer)
-#     if not Business.is_link_for_update(form_data):
-#         flash('Link must be unique', 'update_error')
-#         return redirect(request.referrer)
-#     Business.update_business(form_data)
-#     return redirect('/my_businesses')
-
-# @app.route('/business/delete/<int:id>',  methods=['GET', 'POST'])
-# def delete_business(id):
-#     user_id = session.get('user_id')
-#     data = {
-#             "id":id,
-#             "user_id":user_id
-#     }
-#     Business.delete(data)
-#     return redirect('/dashboard')
 @app.route('/business/delete/<int:id>', methods=['GET', 'POST'])
 def delete_business(id):
     # Check if the user is logged in

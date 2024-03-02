@@ -63,21 +63,6 @@ def update():
     flash('update successful', 'update_error')
     return redirect(f'/user/{user_id}')
 
-# Account Page Route
-
-# @app.route('/user/<int:id>')
-# def account_page(id):
-#     data = {
-#         'id': id
-#     }
-#     user_data = {
-#         'user_id': int(session['user_id'])
-#     }
-#     creation = creation.Creation.get_all_from_user(user_data)
-    
-#     return render_template('account.html', user = User.get_user_by_id(data), magazines = magazines) #count = magazine.Magazine.num_subscribers()
-
-# Handel Logout
 
 @app.route('/logout')
 def logout():
